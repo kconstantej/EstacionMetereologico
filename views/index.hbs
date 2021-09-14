@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/estilos.css">
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <title>Proyecto Klima</title>
+</head>
+
+<body data-spy="scroll" data-target="#navbar" data-offset="57">
+    <!-- Header -->
+    <nav id="header" class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a href="/">
+                <img src="/assets/imgs/logo.png" alt="Logo" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
+                aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                Menú <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#main2">Consultar Clima</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#historico">Histórico Ecuador</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="·" data-toggle="modal" data-target="#modalSubir">Subir
+                            Información<span class="sr-only"></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+    <!-- End Header -->
+
+    <!-- Main -->
+    <section id="main" style="background-image: url('/assets/imgs/{{fondo}}');">
+        <div class="container pt-4" id="main2" style="visibility: hidden;">
+            <div class="row m-0 vh-100 justify-content-center aling items-center">
+                <div class="col-auto text-center">
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+        <div class="container pt-4">
+            <form class="d-flex justify-content-center text-center" action="/consultaClima" method="post">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="">
+                            <input class="form-control" type="text" placeholder="Ej: Quito" name="ciudad" id="ciudad"
+                                required>
+                            <div class="buscar" id="div_buscar">
+                                <ul id="buscador"></ul>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <button class="btn btn-success" type="button" onclick="autocompletado()">Ayuda de
+                            búsqueda</button>
+                    </div>
+                    <div class="form-group col-md-1">
+                        <button class="btn btn-success" type="submit">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="container pt-4">
+            <div class="d-flex justify-content-center text-center" action="/consultaClima" method="post">
+                <span class="badge badge-danger" style="font-size:20pt;">{{error}}</span>
+            </div>
+        </div>
+
+        <div class="justify-content-center">
+
+        </div>
+
+        <div class="container pt-4" id="datos_ciudad">
+            <div class="row">
+                <div class="col-md-4 text-white">
+                    <br>
+                    <p><i class="fas fa-thermometer"></i> <abbr data-toggle="tooltip"
+                            title="Es una medida de la sensación de frío o calor.">Sensación térmica:</abbr>
+                        {{respuesta.Termica}} ℃ </p>
+                    <p><i class="fas fa-water"></i> <abbr data-toggle="tooltip"
+                            title="Cantidad de agua, vapor de agua o cualquier otro líquido que está presente en la superficie o el interior de un cuerpo o en el aire.">Humedad:</abbr>
+                        {{respuesta.Humedad}}%</p>
+                    <p><i class="fas fa-wind"></i> <abbr data-toggle="tooltip"
+                            title="Mide la componente horizontal del desplazamiento del aire en un punto y en un instante determinados.">Velocidad
+                            del Viento:</abbr> {{respuesta.V_viento}} km/h</p>
+                    <p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-moisture" viewBox="0 0 16 16">
+                            <path
+                                d="M13.5 0a.5.5 0 0 0 0 1H15v2.75h-.5a.5.5 0 0 0 0 1h.5V7.5h-1.5a.5.5 0 0 0 0 1H15v2.75h-.5a.5.5 0 0 0 0 1h.5V15h-1.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 .5-.5V.5a.5.5 0 0 0-.5-.5h-2zM7 1.5l.364-.343a.5.5 0 0 0-.728 0l-.002.002-.006.007-.022.023-.08.088a28.458 28.458 0 0 0-1.274 1.517c-.769.983-1.714 2.325-2.385 3.727C2.368 7.564 2 8.682 2 9.733 2 12.614 4.212 15 7 15s5-2.386 5-5.267c0-1.05-.368-2.169-.867-3.212-.671-1.402-1.616-2.744-2.385-3.727a28.458 28.458 0 0 0-1.354-1.605l-.022-.023-.006-.007-.002-.001L7 1.5zm0 0-.364-.343L7 1.5zm-.016.766L7 2.247l.016.019c.24.274.572.667.944 1.144.611.781 1.32 1.776 1.901 2.827H4.14c.58-1.051 1.29-2.046 1.9-2.827.373-.477.706-.87.945-1.144zM3 9.733c0-.755.244-1.612.638-2.496h6.724c.395.884.638 1.741.638 2.496C11 12.117 9.182 14 7 14s-4-1.883-4-4.267z" />
+                        </svg> <abbr data-toggle="tooltip" title="Medida de presión de la atmósfera.">Presión:</abbr>
+                        {{respuesta.Presion}} <abbr data-toggle="tooltip" title="Milibar">mbar</abbr></p>
+                    <p><i class="fas fa-cloud-showers-heavy"></i> <abbr data-toggle="tooltip"
+                            title="Presión que ejerce la atmósfera sobre la superficie de la Tierra.">Precipitación:</abbr>
+                        {{respuesta.Precipitacion}} mm
+                    <p><i class="fas fa-cloud"></i> <abbr data-toggle="tooltip"
+                            title="Es cualquier forma de hidrometeoro que cae de la atmósfera y llega a la superficie terrestre.">Capa
+                            de Nubes:</abbr> {{respuesta.Capa_nubes}} %</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <br>
+                    <br>
+                    <br>
+                    <h1 class="text-white"><i class="fas fa-map-marked-alt"></i> {{respuesta.Ciudad}}
+                    </h1>
+                </div>
+                <div class="col-md-4">
+                    <h1 class="text-white text-center" id="hour">
+                        {{hora_api}}
+                    </h1>
+                    <h2 class="text-white text-center">
+                        {{respuesta.Fecha}}
+                    </h2>
+                    <p style="text-align: center;">
+                        <img class="card-img-top" src={{respuesta.Icono}} alt="">
+                    </p>
+                    <h1 class="text-white text-center" id="tempe">
+                        {{respuesta.Temperatura}} ℃
+                    </h1>
+                </div>
+            </div>
+            <div class="row">
+                <br>
+                <br>
+            </div>
+        </div>
+
+        <div class="container pt-4" id="historico" style="visibility: hidden;">
+            <br>
+        </div>
+
+        <div class="container pt-4">
+            <div class="row">
+                <div class="col text-center text-white" style="font-size: larger;">
+                    <p>
+                    <h1>
+                        Consulta de Datos Históricos
+                    </h1>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="container pt-4">
+            <div class="row">
+                <div class="col text-center text-white" style="font-size: larger;">
+                    <p>
+                    <h1 class="text-white"><i class="fas fa-map-marked-alt"></i> {{titulo}}
+                    </h1>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <form action="/consultaBase" method="post" id="miFormulario">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="" class="text-white">Ciudades</label>
+                        <select class="form-control" name="provincia" id="provincia">
+                            <option>Seleciona una Ciudad del Ecuador</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="" class="text-white">Fecha y Hora de Inicio</label>
+                        <input class="form-control" type="datetime-local" name="fecha_inicio" id="fecha_inicio"
+                            max="{{max}}" onchange="validarFecha();" required>
+                        <div class="alert alert-danger" id="error">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="" class="text-white">Fecha y Hora Final</label>
+                        <input class="form-control" type="datetime-local" name="fecha_final" id="fecha_final"
+                            max="{{max}}" onchange="validarFecha();" required>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label><br></label>
+                        <button class="btn btn-success form-control" type="submit" id="buscar">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="container pt-4" id="titulo_historico">
+            <div class="row">
+                <div class="col text-center text-white" style="font-size: larger;">
+                    <p>{{titulo_2}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container pb-4" id="div_datos">
+            <div class="form-row justify-content-center">
+                <label for="" class="col-form-label text-white">Tipo de datos:</label>
+                <div class="col-md-4">
+                    <select class="form-control" name="tipos_graficos" id="tipos_graficos" onchange='mostrar()'>
+                        <option value="0">Selecciona una opción</option>
+                        <option value="1">Temperatura</option>
+                        <option value="2">Sensaciones Térmica</option>
+                        <option value="3">Presión</option>
+                        <option value="4">Precipitación</option>
+                        <option value="5">Humedad</option>
+                        <option value="6">Capa de Nubes</option>
+                        <option value="7">Velocidad del Viento</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <figure class="highcharts-figure">
+            <div class="container">
+                <div id="container2"></div>
+            </div>
+        </figure>
+        <figure class="highcharts-figure">
+            <div class="container">
+                <div id="container3" style="display: none"></div>
+            </div>
+        </figure>
+
+        <figure class="highcharts-figure">
+            <div class="container">
+                <div id="container4" style="display: none"></div>
+            </div>
+        </figure>
+
+        <figure class="highcharts-figure">
+            <div class="container">
+                <div id="container5" style="display: none"></div>
+            </div>
+        </figure>
+
+        <figure class="highcharts-figure">
+            <div class="container">
+                <div id="container6" style="display: none"></div>
+            </div>
+        </figure>
+
+        <figure class="highcharts-figure">
+            <div class="container">
+                <div id="container7" style="display: none"></div>
+            </div>
+        </figure>
+
+        <figure class="highcharts-figure">
+            <div class="container">
+                <div id="container8" style="display: none"></div>
+            </div>
+        </figure>
+
+        <div class="container pt-4" id="titulo_media">
+            <div class="row">
+                <div class="col text-center text-white" style="font-size: larger;">
+                    <p>Media de Datos</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" id="tabla2">
+            <table class="table table-hover" id="tabla_medias">
+                <tr>
+                    <th scope="col">Temperatura ℃</th>
+                    <th scope="col">Sensacion Térmica ℃</th>
+                    <th scope="col">Presión mbar</th>
+                    <th scope="col">Precipitación mm</th>
+                    <th scope="col">Humedad %</th>
+                    <th scope="col">Capa de Nubes %</th>
+                    <th scope="col">Velocidad del Viento km/h</th>
+                </tr>
+                <tr>
+                    <td>{{medias.m_temperatura}}</td>
+                    <td>{{medias.m_sensacion_termica}}</td>
+                    <td>{{medias.m_presion}}</td>
+                    <td>{{medias.m_precipitacion}}</td>
+                    <td>{{medias.m_humedad}}</td>
+                    <td>{{medias.m_capa_nubes}}</td>
+                    <td>{{medias.m_v_viento}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="container pb-4">
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-success"
+                        onclick="exportTableToCSV2('{{titulo}}_medias.csv')">Descargar</button>
+                </div>
+            </div>
+        </div>
+        <div class="container pt-4" id="titulo_historico">
+            <div class="row">
+                <div class="col text-center text-white" style="font-size: larger;">
+                    <p>Datos Históricos</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" id="tabla">
+            <table class="table table-hover" id="tabla_base">
+                <tr>
+                    <th>Temperatura ℃</th>
+                    <th>Sensacion Térmica ℃</th>
+                    <th>Presión mbar</th>
+                    <th>Precipitación mm</th>
+                    <th>Humedad %</th>
+                    <th>Capa de Nubes %</th>
+                    <th>Velocidad Viento km/h</th>
+                    <th>Fecha</th>
+                    <th>Descripción del Tiempo</th>
+                </tr>
+                {{#each tabla}}
+                <tr>
+                    <td>{{temperatura}}</td>
+                    <td>{{sensacion_termica}}</td>
+                    <td>{{presion}}</td>
+                    <td>{{precipitacion}}</td>
+                    <td>{{humedad}}</td>
+                    <td>{{capa_nubes}}</td>
+                    <td>{{velocidad_viento}}</td>
+                    <td>{{pais}}</td>
+                    <td>{{descripcion_tiempo}}</td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+        <div class="container pb-4">
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-success" onclick="exportTableToCSV('{{titulo}}.csv')">Descargar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <input type="text" name="" id="fechas" value={{fechas}}>
+                    <input type="text" name="" id="temperaturas" value={{temperaturas}}>
+                    <input type="text" name="" id="sensaciones_termicas" value={{sensaciones_termicas}}>
+                    <input type="text" name="" id="presiones" value={{presiones}}>
+                    <input type="text" name="" id="precipitaciones" value={{precipitaciones}}>
+                    <input type="text" name="" id="humedades" value={{humedades}}>
+                    <input type="text" name="" id="capas_nubes" value={{capas_nubes}}>
+                    <input type="text" name="" id="velocidades_viento" value={{velocidades_viento}}>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- End Main -->
+
+    <!-- Footer -->
+    <footer id="footer" class="pt-3">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <p class="m-0 text-center text-white">Copyright &copy; Ken Constante {{getAnio}}</p>
+                </div>
+                <div class="">
+                    <p style="text-align: right;">
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col referencias pt-2">
+                    <ul>
+                        <li>
+                            <a class="btn btn-dark btn-social mx-2"
+                                href="https://linkedin.com/in/ken-constante-10a3731b4" class="social-link linked"
+                                target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        </li>
+                        <li>
+                            <a class="btn btn-dark btn-social" href="https://github.com/kconstantej" target="_blank"><i
+                                    class="fab fa-github"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="">
+                    <p style="text-align: right;">
+                        <a href="https://www.ups.edu.ec/">
+                            <img src="/assets/imgs/logo_ups.png" alt="Logo" />
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+    <!-- Modal Subir -->
+    <div class="modal fade" id="modalSubir" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Subir Información</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-success" role="alert">
+                    Selecciona un archivo para guardar su información en nuestra base de datos.
+                </div>
+                <div class="modal-body">
+                    <div class="custom-file">
+                        <form action="/subir" method="post" enctype="multipart/form-data">
+                            <input type="file" class="" name="archivo" required />
+                            <div class="modal-footer pt-4">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-success">Enviar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal Cotizar -->
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+        <script src="/assets/js/scripts.js"></script>
+</body>
+
+</html>

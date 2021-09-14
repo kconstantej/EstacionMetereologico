@@ -1,0 +1,133 @@
+/*Header*/
+
+#header img {
+    width: 180px;
+    height: 70px;
+}
+
+
+/*nav*/
+
+nav {
+    background-color: #2c343c;
+    position: fixed;
+}
+
+
+/*main*/
+
+#main p {
+    font-size: 1.5rem;
+}
+
+#tempe {
+    font-size: 8rem;
+}
+
+#hour {
+    font-size: 5rem;
+}
+
+#main {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    max-width: 100%;
+}
+
+#main img {
+    width: 50px;
+    border-radius: 25px;
+}
+
+.buscar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.buscar li {
+    padding: 8px 16px;
+    background-color: white;
+}
+
+.buscar li:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+#footer {
+    background-color: #343c44;
+}
+
+#footer a {
+    color: #fff;
+    border-radius: 25px;
+}
+
+#footer img {
+    width: 80px;
+    height: 65px;
+}
+
+.referencias {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.referencias ul li {
+    display: inline;
+}
+
+select {
+    width: 1000px;
+}
+
+option {
+    width: 150px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+th,
+tr,
+td {
+    border-top: none !important;
+    border-left: none !important;
+}
+
+#tabla,
+#tabla2 {
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+tr {
+    text-align: center;
+}
+
+table th {
+    background-color: rgba(34, 39, 48, 0.5);
+}
+
+table th {
+    color: white;
+}
+
+table td {
+    color: white;
+    background-color: rgba(34, 39, 48, 0.3);
+}
+
+#fechas,
+#temperaturas,
+#sensaciones_termicas,
+#presiones,
+#precipitaciones,
+#humedades,
+#capas_nubes,
+#velocidades_viento,
+#val_ocultar,
+#error {
+    display: none;
+}
